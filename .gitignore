@@ -95,3 +95,8 @@ Temporary Items
 
 # Annotation Processing
 .apt_generated/
+
+# Intellij
+.idea/
+*.iml
+*.iws
