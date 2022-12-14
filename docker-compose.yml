@@ -16,7 +16,7 @@ services:
     networks:
       - db_network
     restart: always
-  web:
+  goorm:
     build: .
     expose:
       - 8080
