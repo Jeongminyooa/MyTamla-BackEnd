@@ -59,8 +59,9 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           envs: GITHUB_SHA
           script: |
-            sudo docker rm -f $(docker ps -qa)
-            sudo docker pull ${{ secrets.DOCKER_REPO }}/goorm
-            docker-compose up -d
-            docker image prune -f
+             docker stop goorm
+             docker rm goorm
+             sudo docker pull ${{ secrets.DOCKER_REPO }}/goorm
+             docker run -d --name goorm -p 8080:8080 ${{ secrets.DOCKER_REPO }}/goorm
+             docker rmi -f $(docker images -f "dangling=true" -q)
     
