@@ -24,6 +24,7 @@ public class HoldingCreature {
 
     private String name;
 
+    @Enumerated(EnumType.STRING)
     private CreatureType creatureType;
 
     @Builder
