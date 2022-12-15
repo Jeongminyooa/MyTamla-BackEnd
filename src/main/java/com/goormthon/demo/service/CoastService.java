@@ -22,7 +22,7 @@ public class CoastService {
     private final RecordRepository recordRepository;
 
     @Transactional
-    public void save(SurveyRequest req) {
+    public String save(SurveyRequest req) {
 
         CoastType resultType = getCoastResult(req);
         Record record = Record.builder()
@@ -30,7 +30,7 @@ public class CoastService {
                 .build();
         recordRepository.save(record);
 
-        return;
+        return resultType.toString().toLowerCase();
     }
 
     public CoastType getCoastResult(SurveyRequest req) {
