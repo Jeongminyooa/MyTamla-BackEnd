@@ -44,6 +44,7 @@ public class CoastService {
                 CreatureResponse item = CreatureResponse.builder()
                         .name(creature.getName())
                         .image(creature.getImage())
+                        .kind(creature.getCreatureType().getName())
                         .build();
                 holdingCreatures.add(item);
             }
@@ -63,11 +64,9 @@ public class CoastService {
             CoastResponse response = CoastResponse.builder()
                     .dateType(c.getDateType().toString().toLowerCase())
                     .coastalName(c.getCoastType().getName())
-                    .coastalType(c.getCoastType().toString())
                     .coastalImage(c.getCoastalImage())
                     .coastalContent(c.getCoastalContent())
                     .holdingCreature(holdingCreatures)
-                    .creatureContent(c.getCreatureContent())
                     .location(c.getLocation())
                     .locationImage(c.getLocationImage())
                     .place(places)

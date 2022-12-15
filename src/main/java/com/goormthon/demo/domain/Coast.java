@@ -38,9 +38,6 @@ public class Coast {
     @Column(name = "location_image")
     private String locationImage;
 
-    @Column(name = "creature_content", length = 1000)
-    private String creatureContent;
-
     @OneToMany(mappedBy = "coast", cascade = CascadeType.ALL)
     private List<HoldingCreature> creatures = new ArrayList<>();
 
@@ -54,15 +51,14 @@ public class Coast {
     private String enemy;
 
     @Builder
-    public Coast (DateType dateType, CoastType coastType, String coastalImage, String coastalContent,
-                  String location, String locationImage, String creatureContent) {
+    public Coast (DateType dateType, CoastType coastType, String coastalImage,
+                  String coastalContent, String location, String locationImage) {
         this.dateType = dateType;
         this.coastType = coastType;
         this.coastalImage = coastalImage;
         this.coastalContent = coastalContent;
         this.location = location;
         this.locationImage = locationImage;
-        this.creatureContent = creatureContent;
     }
 
 
