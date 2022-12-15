@@ -10,7 +10,6 @@ public class CoastResponse {
     private String dateType;
 
     private String coastalName;
-    private String coastalType;
     private String coastalImage;
     private String coastalContent;
 
@@ -24,13 +23,12 @@ public class CoastResponse {
     private String enemy;
 
     @Builder
-    public CoastResponse(String dateType, String coastalName, String coastalType, String coastalImage, String coastalContent,
+    public CoastResponse(String dateType, String coastalName, String coastalImage, String coastalContent,
                          List<CreatureResponse> holdingCreature,
                          String location, String locationImage, List<PlaceResponse> place,
                          String friend, String enemy) {
         this.dateType = dateType;
         this.coastalName = coastalName;
-        this.coastalType = coastalType;
         this.coastalImage = coastalImage;
         this.coastalContent = coastalContent;
 
