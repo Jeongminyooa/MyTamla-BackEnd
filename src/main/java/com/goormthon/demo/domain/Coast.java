@@ -47,6 +47,12 @@ public class Coast {
     @OneToMany(mappedBy = "coast", cascade = CascadeType.ALL)
     private List<Place> places = new ArrayList<>();
 
+    @Column(name = "friend")
+    private String friend;
+
+    @Column(name = "enemy")
+    private String enemy;
+
     @Builder
     public Coast (DateType dateType, CoastType coastType, String coastalImage, String coastalContent,
                   String location, String locationImage, String creatureContent) {
