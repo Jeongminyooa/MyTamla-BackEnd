@@ -81,24 +81,26 @@ public class CoastService {
     }
 
     public CoastType calculateCoastResult(SurveyRequest req) {
-        // b->c->i->s->m
-        int[] totalScore = { 0, 0, 0, 0, 0};
+        // b->c->i->s
+        final int COAST_COUNT = 4;
+        int[] totalScore = { 0, 0, 0, 0};
 
-        int[][] scoreOfFirst = { {3, 3, 2, 1, 1}, {2, 3, 2, 1, 3}, {3, 1, 2, 3, 3},
-                {1, 1, 3, 2, 2}, {3, 3, 1, 3, 1}, {2, 2, 1, 1, 2} };
-        int[][] scoreOfSecond = { {2, 3, 2, 1, 1}, {1, 1, 1, 1, 1}, {3, 2, 1, 1, 1},
-                {1, 2, 3, 1, 1}, {3, 2, 1, 1, 2}, {2, 2, 1, 1, 1} };
-        int[][] scoreOfThird = { {2, 2, 1, 2, 2}, {1, 1, 2, 2, 1}, {1, 3, 3, 3, 3},
-                {1, 3, 1, 3, 1}, {3, 3, 2, 3, 1}, {3, 3, 1, 1, 1} };
-        int[][] scoreOfFourth = { {2, 2, 3, 1, 2}, {1, 1, 2, 1, 1}, {3, 2, 2, 2, 3},
-                {1, 1, 1, 3, 1}, {1, 1, 2, 1, 2}, {2, 2, 2, 2, 2} };
-        int[][] scoreOfFifth = { {1, 2, 2, 3, 1}, {1, 1, 3, 1, 1}, {2, 2, 1, 2, 3},
-                {2, 3, 3, 3, 2}, {1, 1, 1, 1, 3}, {1, 1, 1, 1, 1} };
-        int[][] scoreOfSixth = { {1, 3, 1, 1, 3}, {1, 1, 1, 3, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1} };
-        int[][] scoreOfSeventh = { {1, 1, 2, 1, 2}, {2, 3, 1, 1, 3}, {1, 1, 2, 2, 1},
-                {3, 1, 3, 3, 1}, {1, 2, 1, 1, 3}, {2, 2, 1, 1, 2} };
+        int[][] scoreOfFirst = { {3, 3, 2, 1}, {2, 3, 2, 1}, {3, 1, 2, 3},
+                                {1, 1, 3, 2}, {3, 3, 1, 3}, {2, 2, 1, 1} };
+        int[][] scoreOfSecond = { {2, 3, 2, 1}, {1, 1, 1, 1}, {3, 2, 1, 1},
+                                {1, 2, 3, 1}, {3, 2, 1, 1}, {2, 2, 1, 1} };
+        int[][] scoreOfThird = { {2, 2, 1, 2}, {1, 1, 2, 2}, {1, 3, 3, 3},
+                                {1, 3, 1, 3}, {3, 3, 2, 3}, {3, 3, 1, 1} };
+        int[][] scoreOfFourth = { {2, 2, 3, 1}, {1, 1, 2, 1}, {3, 2, 2, 2},
+                                {1, 1, 1, 3}, {1, 1, 2, 1}, {2, 2, 2, 2} };
+        int[][] scoreOfFifth = { {1, 2, 2, 3}, {1, 1, 3, 1}, {2, 2, 1, 2},
+                                {2, 3, 3, 3}, {1, 1, 1, 1}, {1, 1, 1, 1} };
+        int[][] scoreOfSixth = { {1, 3, 1, 1}, {1, 1, 1, 3}, {1, 1, 1, 1}, {1, 1, 1, 1} };
+        int[][] scoreOfSeventh = { {1, 1, 2, 1}, {2, 3, 1, 1}, {1, 1, 2, 2},
+                                {3, 1, 3, 3}, {1, 2, 1, 1}, {2, 2, 1, 1} };
 
         for(int i = 0; i < scoreOfFirst[0].length; i++) {
+            System.out.println(req.getFirst() + " " + (req.getFirst()-1));
             totalScore[i] += scoreOfFirst[req.getFirst()-1][i];
             totalScore[i] += scoreOfSecond[req.getSecond()-1][i];
             totalScore[i] += scoreOfThird[req.getThird()-1][i];
@@ -130,8 +132,6 @@ public class CoastService {
                 return CoastType.IHOTEWOO;
             case 3:
                 return CoastType.SEONGSAN;
-            case 4:
-                return CoastType.MARADO;
         }
 
         return null;

@@ -30,7 +30,7 @@ public class CoastController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR"),
             @ApiResponse(responseCode = "4001", description = "request parameter 개수가 올바르지 않습니다.")
     })
-    public ResponseEntity<BaseResponse> postCoastSurvey(SurveyRequest request) {
+    public ResponseEntity<BaseResponse> postCoastSurvey(@RequestBody SurveyRequest request) {
         String result = coastService.save(request);
         return ResponseEntity.ok(new BaseResponse(result));
     }
