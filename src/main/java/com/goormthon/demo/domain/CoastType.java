@@ -16,4 +16,7 @@ public enum CoastType {
     CoastType(String name) {
         this.name = name;
     }
+    public String getName() {
+        return name;
+    }
 }
