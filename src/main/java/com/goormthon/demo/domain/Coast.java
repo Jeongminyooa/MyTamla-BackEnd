@@ -30,7 +30,7 @@ public class Coast {
     @Column(name = "coastal_image")
     private String coastalImage;
 
-    @Column(name = "coastal_content")
+    @Column(name = "coastal_content", length = 1000)
     private String coastalContent;
 
     private String location;
@@ -38,7 +38,7 @@ public class Coast {
     @Column(name = "location_image")
     private String locationImage;
 
-    @Column(name = "creature_content")
+    @Column(name = "creature_content", length = 1000)
     private String creatureContent;
 
     @OneToMany(mappedBy = "coast", cascade = CascadeType.ALL)
