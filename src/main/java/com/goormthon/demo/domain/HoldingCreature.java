@@ -22,12 +22,12 @@ public class HoldingCreature {
 
     private String image;
 
-    private boolean active;
+    private String name;
 
     @Builder
-    public HoldingCreature(Coast coast, String image, boolean active) {
+    public HoldingCreature(Coast coast, String image, String name) {
         coast.getCreatures().add(this);
         this.image = image;
-        this.active = active;
+        this.name = name;
     }
 }

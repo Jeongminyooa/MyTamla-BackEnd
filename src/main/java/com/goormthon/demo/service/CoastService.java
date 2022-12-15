@@ -6,8 +6,6 @@ import com.goormthon.demo.dto.CreatureResponse;
 import com.goormthon.demo.dto.PlaceResponse;
 import com.goormthon.demo.dto.SurveyRequest;
 import com.goormthon.demo.repository.CoastRepository;
-import com.goormthon.demo.repository.HoldingCreatureRepository;
-import com.goormthon.demo.repository.PlaceRepository;
 import com.goormthon.demo.repository.RecordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,14 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 @Service
 @RequiredArgsConstructor
 public class CoastService {
     private final CoastRepository coastRepository;
-    private final HoldingCreatureRepository holdingCreatureRepository;
-    private final PlaceRepository placeRepository;
     private final RecordRepository recordRepository;
 
     @Transactional
@@ -37,14 +32,6 @@ public class CoastService {
         return resultType.toString().toLowerCase();
     }
 
-    public CoastType calculateCoastResult(SurveyRequest req) {
-        // TODO 로직 작성
-
-        // TODO 하나라도 답변이 넘어오지 않는다면 예외 처리
-        return CoastType.CHAGWIDO;
-    }
-
-
     @Transactional(readOnly = true)
     public List<CoastResponse> getCoastResult(String coastType) {
         List<Coast> coast = coastRepository.findByCoastType(CoastType.valueOf(coastType.toUpperCase()));
@@ -55,6 +42,7 @@ public class CoastService {
             List<CreatureResponse> holdingCreatures = new ArrayList<>();
             for(HoldingCreature creature : c.getCreatures()) {
                 CreatureResponse item = CreatureResponse.builder()
+                        .name(creature.getName())
                         .image(creature.getImage())
                         .build();
                 holdingCreatures.add(item);
@@ -91,4 +79,62 @@ public class CoastService {
         }
         return responses;
     }
+
+    public CoastType calculateCoastResult(SurveyRequest req) {
+        // b->c->i->s->m
+        int[] totalScore = { 0, 0, 0, 0, 0};
+
+        int[][] scoreOfFirst = { {3, 3, 2, 1, 1}, {2, 3, 2, 1, 3}, {3, 1, 2, 3, 3},
+                {1, 1, 3, 2, 2}, {3, 3, 1, 3, 1}, {2, 2, 1, 1, 2} };
+        int[][] scoreOfSecond = { {2, 3, 2, 1, 1}, {1, 1, 1, 1, 1}, {3, 2, 1, 1, 1},
+                {1, 2, 3, 1, 1}, {3, 2, 1, 1, 2}, {2, 2, 1, 1, 1} };
+        int[][] scoreOfThird = { {2, 2, 1, 2, 2}, {1, 1, 2, 2, 1}, {1, 3, 3, 3, 3},
+                {1, 3, 1, 3, 1}, {3, 3, 2, 3, 1}, {3, 3, 1, 1, 1} };
+        int[][] scoreOfFourth = { {2, 2, 3, 1, 2}, {1, 1, 2, 1, 1}, {3, 2, 2, 2, 3},
+                {1, 1, 1, 1, 1}, {1, 1, 2, 1, 2}, {2, 2, 2, 2, 2} };
+        int[][] scoreOfFifth = { {1, 2, 2, 3, 1}, {1, 1, 3, 1, 1}, {2, 2, 1, 2, 3},
+                {2, 3, 3, 3, 2}, {1, 1, 1, 1, 3}, {1, 1, 1, 1, 1} };
+        int[][] scoreOfSixth = { {1, 3, 1, 1, 3}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1} };
+        int[][] scoreOfSeventh = { {1, 1, 2, 1, 2}, {2, 3, 1, 1, 3}, {1, 1, 2, 2, 1},
+                {3, 1, 3, 3, 1}, {1, 2, 1, 1, 3}, {2, 2, 1, 1, 2} };
+
+        for(int i = 0; i < scoreOfFirst[0].length; i++) {
+            totalScore[i] += scoreOfFirst[req.getFirst()-1][i];
+            totalScore[i] += scoreOfSecond[req.getSecond()-1][i];
+            totalScore[i] += scoreOfThird[req.getThird()-1][i];
+            totalScore[i] += scoreOfFourth[req.getFourth()-1][i];
+            totalScore[i] += scoreOfFifth[req.getFifth()-1][i];
+            totalScore[i] += scoreOfSeventh[req.getSeventh()-1][i];
+        }
+
+        for(int i = 0; i < scoreOfSixth[0].length; i++) {
+            totalScore[i] += scoreOfSixth[req.getSixth()-1][i];
+        }
+
+        int resultIndex = 0;
+        int max = -10;
+
+        for(int i = 0; i < totalScore.length; i++) {
+            if(max < totalScore[i]) {
+                max = totalScore[i];
+                resultIndex = i;
+            }
+        }
+
+        switch(resultIndex) {
+            case 0:
+                return CoastType.BEOMSEOM;
+            case 1:
+                return CoastType.CHAGWIDO;
+            case 2:
+                return CoastType.IHOTEWOO;
+            case 3:
+                return CoastType.SEONGSAN;
+            case 4:
+                return CoastType.MARADO;
+        }
+
+        return null;
+    }
+
 }
