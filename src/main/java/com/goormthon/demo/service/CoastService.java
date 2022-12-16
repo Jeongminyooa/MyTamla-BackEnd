@@ -55,6 +55,9 @@ public class CoastService {
                 PlaceResponse item = PlaceResponse.builder()
                         .image(place.getImage())
                         .url(place.getUrl())
+                        .name(place.getName())
+                        .time(place.getTime())
+                        .location(place.getLocation())
                         .build();
 
                 places.add(item);
