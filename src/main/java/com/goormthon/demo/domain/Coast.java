@@ -47,8 +47,14 @@ public class Coast {
     @Column(name = "friend")
     private String friend;
 
+    @Column(name = "friend_name")
+    private String friendName;
+
     @Column(name = "enemy")
     private String enemy;
+
+    @Column(name = "enemy_name")
+    private String enemyName;
 
     @Builder
     public Coast (DateType dateType, CoastType coastType, String coastalImage,

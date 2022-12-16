@@ -71,7 +71,9 @@ public class CoastService {
                     .locationImage(c.getLocationImage())
                     .place(places)
                     .friend(c.getFriend())
+                    .friendName(c.getFriendName())
                     .enemy(c.getEnemy())
+                    .enemyName(c.getEnemyName())
                     .build();
 
             responses.add(response);

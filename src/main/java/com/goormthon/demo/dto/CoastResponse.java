@@ -20,13 +20,15 @@ public class CoastResponse {
 
     private List<PlaceResponse> place;
     private String friend;
+    private String friendName;
     private String enemy;
+    private String enemyName;
 
     @Builder
     public CoastResponse(String dateType, String coastalName, String coastalImage, String coastalContent,
                          List<CreatureResponse> holdingCreature,
                          String location, String locationImage, List<PlaceResponse> place,
-                         String friend, String enemy) {
+                         String friend, String friendName, String enemy, String enemyName) {
         this.dateType = dateType;
         this.coastalName = coastalName;
         this.coastalImage = coastalImage;
@@ -39,7 +41,9 @@ public class CoastResponse {
         this.place = place;
 
         this.friend = friend;
+        this.friendName = friendName;
         this.enemy = enemy;
+        this.enemyName = enemyName;
     }
 
 
