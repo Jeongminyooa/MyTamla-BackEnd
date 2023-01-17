@@ -56,8 +56,6 @@ jobs:
       - name: Start MySQL
         uses: samin/mysql-action@v1.3
         with:
-          host port: 3306
-          container port: 3306
           mysql database: 'goormthon'
           mysql user: 'mytamla'
           mysql root password: 'Mytamla1234!'
