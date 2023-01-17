@@ -58,7 +58,7 @@ jobs:
         with:
           character set server: 'utf8'
           mysql database: 'goormthon'
-          mysql user: 'root'
+          mysql user: 'admin'
           mysql password: 'luck0217'
 
       #테스트를 위한 test properties 설정
