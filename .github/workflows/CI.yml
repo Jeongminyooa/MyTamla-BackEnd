@@ -54,7 +54,7 @@ jobs:
 
       #test를 위한 mysql설정
       - name: Start MySQL
-        uses: samin/mysql-action@v1.3
+        uses: samin/mysql-action@v1
         with:
           mysql database: 'goormthon'
           mysql user: 'mytamla'
