@@ -56,9 +56,10 @@ jobs:
       - name: Start MySQL
         uses: samin/mysql-action@v1.3
         with:
-          character set server: 'utf8'
+          host port: 3306
+          container port: 3306
           mysql database: 'goormthon'
-          mysql user: 'admin'
+          mysql user: 'root'
           mysql password: 'luck0217'
 
       #테스트를 위한 test properties 설정
