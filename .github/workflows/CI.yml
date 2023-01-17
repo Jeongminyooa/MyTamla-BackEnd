@@ -57,8 +57,8 @@ jobs:
         uses: samin/mysql-action@v1
         with:
           mysql database: 'goormthon'
-          mysql user: 'mytamla'
-          mysql root password: 'Mytamla1234!'
+          mysql user: 'goorm2'
+          mysql root password: 'Goorm12!'
 
       #테스트를 위한 test properties 설정
       - name: Make application.properties
