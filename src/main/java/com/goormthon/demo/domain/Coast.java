@@ -55,19 +55,4 @@ public class Coast {
 
     @Column(name = "enemy_name")
     private String enemyName;
-
-    @Builder
-    public Coast (DateType dateType, CoastType coastType, String coastalImage,
-                  String coastalContent, String location, String locationImage) {
-        this.dateType = dateType;
-        this.coastType = coastType;
-        this.coastalImage = coastalImage;
-        this.coastalContent = coastalContent;
-        this.location = location;
-        this.locationImage = locationImage;
-    }
-
-
-
-
 }

@@ -48,14 +48,4 @@ public class UploadController {
 
         return ResponseEntity.ok(new BaseResponse(SUCCESS));
     }
-
-    @GetMapping("/download/{fileName}")
-    @ApiOperation(value = "파일 다운로드", notes = "프론트로 파일 전송 시에는 http 헤더에 Content-Type 넣고 해당 파일 보내주기")
-    @ApiResponses({
-            @ApiResponse(responseCode = "400", description = "4003-다운로드실패"),
-            @ApiResponse(responseCode = "500", description = "서버 예외")
-    })
-    public ResponseEntity<byte[]> downloadFile(@PathVariable String fileName) throws Exception {
-        return s3Service.downloadFile(fileName, "content");
-    }
 }
