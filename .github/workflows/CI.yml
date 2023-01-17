@@ -59,8 +59,8 @@ jobs:
           host port: 3306
           container port: 3306
           mysql database: 'goormthon'
-          mysql user: 'root'
-          mysql password: 'luck0217'
+          mysql user: 'mytamla'
+          mysql root password: 'Mytamla1234!'
 
       #테스트를 위한 test properties 설정
       - name: Make application.properties
