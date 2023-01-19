@@ -27,12 +27,4 @@ public class Place {
     private String location;
     private String name;
     private String time;
-
-    @Builder
-    public Place(Coast coast, String image, String url) {
-        coast.getPlaces().add(this);
-        this.image = image;
-        this.url = url;
-    }
-
 }

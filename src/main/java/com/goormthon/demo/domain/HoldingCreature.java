@@ -26,12 +26,4 @@ public class HoldingCreature {
 
     @Enumerated(EnumType.STRING)
     private CreatureType creatureType;
-
-    @Builder
-    public HoldingCreature(Coast coast, String image, String name, CreatureType creatureType) {
-        coast.getCreatures().add(this);
-        this.image = image;
-        this.name = name;
-        this.creatureType = creatureType;
-    }
 }

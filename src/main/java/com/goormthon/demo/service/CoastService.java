@@ -85,8 +85,6 @@ public class CoastService {
     }
 
     public CoastType calculateCoastResult(SurveyRequest req) {
-        // b->c->i->s
-        final int COAST_COUNT = 4;
         int[] totalScore = { 0, 0, 0, 0};
 
         int[][] scoreOfFirst = { {2, 2, 3, 1}, {2, 3, 2, 1}, {3, 1, 2, 3},
@@ -104,7 +102,6 @@ public class CoastService {
                                 {3, 1, 3, 3}, {2, 3, 2, 1}, {2, 2, 1, 2} };
 
         for(int i = 0; i < scoreOfFirst[0].length; i++) {
-            System.out.println(req.getFirst() + " " + (req.getFirst()-1));
             totalScore[i] += scoreOfFirst[req.getFirst()-1][i];
             totalScore[i] += scoreOfSecond[req.getSecond()-1][i];
             totalScore[i] += scoreOfThird[req.getThird()-1][i];
