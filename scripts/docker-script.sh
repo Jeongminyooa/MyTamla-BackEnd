@@ -1,4 +1,4 @@
-ㄴㄴ#!/bin/bash
+#!/bin/bash
 
   DOCKER_IMAGE_NAME=mytamla
 
