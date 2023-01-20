@@ -11,6 +11,11 @@ on:
 # 테스트 결과 작성을 위해 쓰기권한 추가
 permissions: write-all
 
+env: # 새로 추가한 부분
+  S3_BUCKET_NAME: mytamla-deploy
+  PROJECT_NAME: mytamla
+  AWS_CODEDEPLOY_APPLICATION_NAME: mytamla-codedeploy
+  AWS_CODEDEPLOY_DEPLOYMENT_GROUP_NAME: mytamla-dev-group
 
 # 해당 Workflow의 Job 목록
 jobs:
@@ -43,38 +48,36 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      ### CI
       #gradlew 권한 추가
       - name: Grant Execute Permission For Gradlew
         run: chmod +x gradlew
+
+      #배포를 위한 prod properties 설정
+      - name: Make application-prod.properties
+        run: |
+          cd ./src/main/resources
+          touch ./application-prod.properties
+          echo "${{ secrets.PROPERTIES_PROD }}" > ./application-prod.properties
+        shell: bash
 
       #test를 제외한 프로젝트 빌드
       - name: Build With Gradle
         run: ./gradlew build -x test
 
-      #test를 위한 mysql설정
-      - name: Start MySQL
-        uses: samin/mysql-action@v1
-        with:
-          mysql database: 'goormthon'
-          mysql user: 'goorm2'
-          mysql root password: 'Goorm12!'
-
-      #테스트를 위한 test properties 설정
-      - name: Make application.properties
-        run: |
-          cd ./src/test/resources
-          touch ./application.properties
-          echo "${{ secrets.PROPERTIES_TEST }}" > ./application.properties
+      - name: Make zip file
+        run: zip -r ./$GITHUB_SHA.zip .
         shell: bash
 
-      #test코드 빌드
-      - name: Build With Test
-        run: ./gradlew test
-
-      #테스트 결과 파일 생성
-      - name: Publish Unit Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v1
-        if: ${{ always() }}
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          files: build/test-results/**/*.xml
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Upload to S3
+        run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
+
+      # CodeDeploy에게 deployment를 생성하도록 요청합니다.
+      - name: Request Deployment
+        run: aws deploy create-deployment --application-name $AWS_CODEDEPLOY_APPLICATION_NAME --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name $AWS_CODEDEPLOY_DEPLOYMENT_GROUP_NAME --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip

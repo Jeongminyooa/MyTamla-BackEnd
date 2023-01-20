@@ -16,10 +16,12 @@ services:
     networks:
       - db_network
     restart: always
-  goorm:
+  mytamla:
     build: .
-    expose:
-      - 8080
+    container_name: mytamla-green
+    restart: always
+    ports:
+      - 8081:8080
     depends_on:
       - database
 
